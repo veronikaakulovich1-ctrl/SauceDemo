@@ -3,6 +3,9 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 public class BurgerMenuTest extends BaseTest {
 
     @Test
@@ -12,7 +15,7 @@ public class BurgerMenuTest extends BaseTest {
         burgerMenuPage.clickBurgerMenuButton();
         burgerMenuPage.clickLogoutMenuButton();
         boolean isLoginButtonDisplayed = loginPage.getLoginButton().isDisplayed();
-        Assert.assertTrue(isLoginButtonDisplayed, "Login button is not displayed after logout");
+        assertTrue(isLoginButtonDisplayed, "Login button is not displayed after logout");
     }
 
     @Test
@@ -22,7 +25,7 @@ public class BurgerMenuTest extends BaseTest {
         productsPage.clickCart();
         burgerMenuPage.clickBurgerMenuButton();
         burgerMenuPage.clickAllItemsMenuButton();
-        Assert.assertEquals(productsPage.getTitle(), "Products", "Title wasn't found");
+        assertEquals(productsPage.getTitle(), "Products", "Title wasn't found");
     }
 
     @Test
@@ -32,6 +35,6 @@ public class BurgerMenuTest extends BaseTest {
         productsPage.clickCart();
         burgerMenuPage.clickBurgerMenuButton();
         burgerMenuPage.clickAboutItemMenuButton();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://saucelabs.com/", "URL is not as expected after navigating to About page");
+        assertEquals(driver.getCurrentUrl(), "https://saucelabs.com/", "URL is not as expected after navigating to About page");
     }
 }
