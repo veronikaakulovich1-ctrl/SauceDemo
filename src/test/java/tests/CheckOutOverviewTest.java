@@ -5,9 +5,13 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class CheckOutOverviewTest extends BaseTest{
+public class CheckOutOverviewTest extends BaseTest {
 
-    @Test
+    @Test(
+            description = "Проверка цены всех продуктов и total price на Checkout Overview странице",
+            testName = "Проверка цены всех продуктов и total price на Checkout Overview странице",
+            groups = "smoke"
+    )
     public void checkGetProductPriceSumWithTotalPrice() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");

@@ -9,22 +9,30 @@ import static org.testng.Assert.assertFalse;
 
 public class YourCartTest extends BaseTest {
 
-    @Test
+    @Test(
+            description = "Проверка добавления товара в корзину и отображение на странице You Cart",
+            testName = "Проверка добавления товара в корзину и отображение на странице You Cart",
+            groups = "smoke"
+    )
     public void checkAddToCart() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
         productsPage.addToCart("Sauce Labs Backpack");
         productsPage.clickCart();
-        assertEquals(yourCartPage.getTitle(), "Your Cart", "Something went wrong. Your Cart wasn't found");
+        softAssert.assertEquals(yourCartPage.getTitle(), "Your Cart", "Something went wrong. Your Cart wasn't found");
         String expectedProductName = "Sauce Labs Backpack";
         String actualProductName = yourCartPage.getAddedProductName();
-        assertEquals(actualProductName, expectedProductName, "The expected product was not found in the cart.");
+        softAssert.assertEquals(actualProductName, expectedProductName, "The expected product was not found in the cart.");
         softAssert.assertAll();
     }
 
-    @Test
-    public void checkRemoveFromCart(){
+    @Test(
+            description = "Проверка удаления товара из корзины",
+            testName = "Проверка удаления товара из корзины",
+            groups = "smoke"
+    )
+    public void checkRemoveFromCart() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -32,13 +40,16 @@ public class YourCartTest extends BaseTest {
         productsPage.clickCart();
         yourCartPage.clickToRemoveButton("Sauce Labs Backpack");
         WebElement removedItem = yourCartPage.findRemovedCartItemElement();
-        assertFalse(removedItem.isDisplayed(), "Product wasn't removed from the cart");
+        softAssert.assertFalse(removedItem.isDisplayed(), "Product wasn't removed from the cart");
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(
+            description = "Проверка перехода на страницу Product при клике на кнопку Continue Shopping",
+            testName = "Проверка перехода на страницу Product при клике на кнопку Continue Shopping",
+            groups = "regression"
+    )
     public void continueShoppingButtonClick() {
-        SoftAssert softAssert = new SoftAssert();
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
         productsPage.addToCart("Sauce Labs Backpack");

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3"
+       name="SauceDemo suite"
+       parallel="tests">
+
+    <listeners>
+        <listener class-name="tests.TestListener"></listener>
+        <listener class-name="tests.AnnotationTransformer"></listener>
+    </listeners>
+
+    <test name="Chrome">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.CheckOutOverviewTest"/>
+            <class name="tests.CheckoutCompleteTest"/>
+            <class name="tests.CheckoutYourInformationTest"/>
+            <class name="tests.YourCartTest"/>
+            <class name="tests.BurgerMenuTest"/>
+            <parameter name="browser" value="chrome"></parameter>
+        </classes>
+    </test>
+
+    <test name="Edge">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.CheckOutOverviewTest"/>
+            <class name="tests.CheckoutCompleteTest"/>
+            <class name="tests.CheckoutYourInformationTest"/>
+            <class name="tests.YourCartTest"/>
+            <class name="tests.BurgerMenuTest"/>
+            <parameter name="browser" value="edge"></parameter>
+        </classes>
+    </test>
+
+    <test name="Firefox">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.CheckOutOverviewTest"/>
+            <class name="tests.CheckoutCompleteTest"/>
+            <class name="tests.CheckoutYourInformationTest"/>
+            <class name="tests.YourCartTest"/>
+            <class name="tests.BurgerMenuTest"/>
+            <parameter name="browser" value="firefox"></parameter>
+        </classes>
+    </test>
+</suite>
