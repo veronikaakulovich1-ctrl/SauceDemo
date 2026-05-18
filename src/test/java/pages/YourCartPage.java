@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class YourCartPage extends BasePage {
 
     private final String REMOVE_BUTTON = "//button[text()='Remove'][1]";
@@ -39,5 +42,20 @@ public class YourCartPage extends BasePage {
 
     public WebElement findRemovedCartItemElement() {
         return driver.findElement(REMOVED_CART_ITEM);
+    }
+
+    public String getProductNameFromCart(int index) {
+        return driver.findElements(By.cssSelector(".inventory_item_name"))
+                .get(index)
+                .getText();
+    }
+
+    public ArrayList<String> getProductName() {
+        List<WebElement> allProductsElements = driver.findElements(By.cssSelector(".inventory_item_name"));
+        ArrayList<String> names = new ArrayList<>();
+        for (WebElement product : allProductsElements) {
+            names.add(product.getText());
+        }
+        return names;
     }
 }

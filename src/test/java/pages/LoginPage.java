@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
 
@@ -31,5 +32,9 @@ public class LoginPage extends BasePage {
 
     public WebElement getLoginButton() {
         return driver.findElement(LOGIN_BUTTON);
+    }
+
+    public void isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
     }
 }

@@ -8,7 +8,11 @@ import static org.testng.Assert.assertTrue;
 
 public class BurgerMenuTest extends BaseTest {
 
-    @Test
+    @Test(
+            description = "Проверка logout для зарегистрированного пользователя",
+            testName = "Проверка logout",
+            groups = "regression"
+    )
     public void checkLogout() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -18,7 +22,11 @@ public class BurgerMenuTest extends BaseTest {
         assertTrue(isLoginButtonDisplayed, "Login button is not displayed after logout");
     }
 
-    @Test
+    @Test(
+            description = "Проверка перехода на страницу Product через clickAllItems",
+            testName = "Проверка перехода на страницу Product через clickAllItems",
+            groups = "regression"
+    )
     public void checkTransitionToAllItemsMenu() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -28,7 +36,11 @@ public class BurgerMenuTest extends BaseTest {
         assertEquals(productsPage.getTitle(), "Products", "Title wasn't found");
     }
 
-    @Test
+    @Test(
+            description = "Проверка перехода на About Page",
+            testName = "Проверка перехода на About Page",
+            groups = "regression"
+    )
     public void checkTransitionToAboutPage() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
