@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -13,14 +14,17 @@ public class ProductsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Получение тайтла на странице Product")
     public String getTitle() {
         return driver.findElement(TITLE).getText();
     }
 
+    @Step("Добавление товара в корзину")
     public void addToCart(String product) {
         driver.findElement(By.xpath(String.format(ADD_TO_CART_PATTERN, product))).click();
     }
 
+    @Step("Клик по кнопке Cart")
     public void clickCart() {
         driver.findElement(CART).click();
     }

@@ -1,18 +1,20 @@
 package tests;
 
-import net.bytebuddy.matcher.InheritedAnnotationMatcher;
+import io.qameta.allure.testng.AllureTestNg;
+import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.*;
 
 import java.time.Duration;
 import java.util.HashMap;
 
-@Listeners(TestListener.class)
+@Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
 
     WebDriver driver;
@@ -29,7 +31,7 @@ public class BaseTest {
             alwaysRun = true,
             description = "Настройка браузера и параметров"
     )
-    public void setup(@Optional("chrome") String browser) {
+    public void setup(@Optional("chrome") String browser, ITestContext iTestContext) {
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
             HashMap<String, Object> chromePrefs = new HashMap<>();
@@ -49,6 +51,8 @@ public class BaseTest {
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        iTestContext.setAttribute("driver", driver);
 
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);

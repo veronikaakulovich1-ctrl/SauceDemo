@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2"
+       name="SauceDemo suite"
+       parallel="classes">
+
+    <test name="Thread 1">
+        <groups>
+            <run>
+                <include name = "smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.BurgerMenuTest"/>
+            <class name="tests.YourCartTest"/>
+        </classes>
+    </test>
+
+    <test name="Thread 2">
+        <classes>
+            <class name="tests.CheckoutYourInformationTest"/>
+            <class name="tests.CheckoutCompleteTest"/>
+            <class name="tests.CheckOutOverviewTest"/>
+        </classes>
+    </test>
+</suite>

@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 
 import java.util.Locale;
@@ -13,6 +14,16 @@ public class CheckoutCompleteTest extends BaseTest {
             testName = "End to End test для оформления заказа",
             groups = "smoke"
     )
+    @Owner("Akulovich")
+    @Feature("Checkout Complete")
+    @Description("Scenario: End to end Test for complete order" +
+            "Given: Products were added to the cart" +
+            "AND User's information was inputted" +
+            "AND Checkout Overview page is displayed" +
+            "WHEN:  Finish button was tapped" +
+            "THEN: Order was completed" +
+            "AND Checkout Complete page is displayed")
+    @Severity(SeverityLevel.CRITICAL)
     public void andToEndTestForCompleteOrder() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -30,6 +41,13 @@ public class CheckoutCompleteTest extends BaseTest {
             testName = "Проверка перехода по кнопке Back Home со страницы Checkout Completed",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Checkout Complete")
+    @Description("Scenario: Transition upon Back Home Button" +
+            "Given: CHeckout Complete page is displayed" +
+            "WHEN:  Back Home button was tapped" +
+            "THEN: Products page is displayed")
+    @Severity(SeverityLevel.NORMAL)
     public void checkTransitionByBackHomeButton() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");

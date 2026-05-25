@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,6 +15,14 @@ public class YourCartTest extends BaseTest {
             testName = "Проверка добавления товара в корзину и отображение на странице You Cart",
             groups = "smoke"
     )
+    @Owner("Akulovich")
+    @Feature("Your Cart")
+    @Description("Scenario: Check product addition to the cart" +
+            "Given: User is logged in" +
+            "WHEN: Product was added" +
+            "AND Your cart page is displayed" +
+            "THEN: Added product is displayed on the cart")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkAddToCart() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open();
@@ -32,6 +41,15 @@ public class YourCartTest extends BaseTest {
             testName = "Проверка удаления товара из корзины",
             groups = "smoke"
     )
+    @Owner("Akulovich")
+    @Feature("Your Cart")
+    @Description("Scenario: Check removing product from the cart" +
+            "Given: User is logged in" +
+            "AND Product was added to the cart" +
+            "WHEN: Your cart page is displayed" +
+            "AND Remove button next to product was tapped" +
+            "THEN: Product was removed from the cart")
+    @Severity(SeverityLevel.NORMAL)
     public void checkRemoveFromCart() {
         SoftAssert softAssert = new SoftAssert();
         loginPage.open();
@@ -49,6 +67,15 @@ public class YourCartTest extends BaseTest {
             testName = "Проверка перехода на страницу Product при клике на кнопку Continue Shopping",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Your Cart")
+    @Description("Scenario: Check transition upon Continue Shopping Button" +
+            "Given: User is logged in" +
+            "AND Product was added to the cart" +
+            "WHEN: Your cart page is displayed" +
+            "AND Continue Shopping button was tapped" +
+            "THEN: Products page is displayed")
+    @Severity(SeverityLevel.NORMAL)
     public void continueShoppingButtonClick() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");

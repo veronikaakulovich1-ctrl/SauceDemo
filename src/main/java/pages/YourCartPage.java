@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,26 +21,32 @@ public class YourCartPage extends BasePage {
         super(driver);
     }
 
+    @Step("Получение тайтла на странице Your cart")
     public String getTitle() {
         return driver.findElement(TITLE).getText();
     }
 
+    @Step("Удаление товара из корзины")
     public void clickToRemoveButton(String product) {
         driver.findElement(By.xpath(String.format(REMOVE_BUTTON, product))).click();
     }
 
+    @Step("Клик по кнопке Continue Shopping на странице корзины")
     public void clickToContinueShoppingButton() {
         driver.findElement(CONTINUE_SHOPPING_BUTTON).click();
     }
 
+    @Step("Клик по кнопке Checkout на странице корзины")
     public void clickToCheckoutButton() {
         driver.findElement(CHECKOUT_BUTTON).click();
     }
 
+    @Step("Получение информации о добавленном товаре в корзину")
     public String getAddedProductName() {
         return driver.findElement(CART_ITEM_NAME).getText();
     }
 
+    @Step("Получение информации об удаленных товарах из корзины")
     public WebElement findRemovedCartItemElement() {
         return driver.findElement(REMOVED_CART_ITEM);
     }

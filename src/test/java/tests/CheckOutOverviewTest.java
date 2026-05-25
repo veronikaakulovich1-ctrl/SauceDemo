@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,13 @@ public class CheckOutOverviewTest extends BaseTest {
             testName = "Проверка цены всех продуктов и total price на Checkout Overview странице",
             groups = "smoke"
     )
+    @Owner("Akulovich")
+    @Feature("Checkout Overview")
+    @Description("Scenario: Comparison sum products price with total price" +
+            "Given: Products were added to the cart" +
+            "WHEN:  Products price was compare with total price" +
+            "THEN: The sums match")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkGetProductPriceSumWithTotalPrice() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
