@@ -1,8 +1,8 @@
 package tests;
 
 import io.qameta.allure.*;
-import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.LoginPage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -18,12 +18,10 @@ public class BurgerMenuTest extends BaseTest {
     @Feature("Burger Menu")
     @Severity(SeverityLevel.NORMAL)
     public void checkLogout() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        burgerMenuPage.clickBurgerMenuButton();
-        burgerMenuPage.clickLogoutMenuButton();
-        boolean isLoginButtonDisplayed = loginPage.getLoginButton().isDisplayed();
-        assertTrue(isLoginButtonDisplayed, "Login button is not displayed after logout");
+        loginStep.auth("standard_user", "secret_sauce");
+        burgerMenuPage.isPageOpened().openMenu().logout();
+        assertTrue(new LoginPage(driver).isPageOpened().getLoginButton().isDisplayed(),
+                "Login button is not displayed after logout");
     }
 
     @Test(
@@ -35,12 +33,13 @@ public class BurgerMenuTest extends BaseTest {
     @Feature("Burger Menu")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionToAllItemsMenu() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickCart();
-        burgerMenuPage.clickBurgerMenuButton();
-        burgerMenuPage.clickAllItemsMenuButton();
-        assertEquals(productsPage.getTitle(), "Products", "Title wasn't found");
+        loginStep.auth("standard_user", "secret_sauce");
+        productsPage.isPageOpened().openCart();
+        String title = burgerMenuPage.isPageOpened()
+                .openMenu()
+                .openAllItems()
+                .getTitle();
+        assertEquals(title, "Products", "Title wasn't found");
     }
 
     @Test(
@@ -52,11 +51,10 @@ public class BurgerMenuTest extends BaseTest {
     @Feature("Burger Menu")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionToAboutPage() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickCart();
-        burgerMenuPage.clickBurgerMenuButton();
-        burgerMenuPage.clickAboutItemMenuButton();
-        assertEquals(driver.getCurrentUrl(), "https://saucelabs.com/", "URL is not as expected after navigating to About page");
+        loginStep.auth("standard_user", "secret_sauce");
+        productsPage.isPageOpened().openCart();
+        burgerMenuPage.isPageOpened().openMenu().openAbout();
+        assertTrue(driver.getCurrentUrl().contains("saucelabs.com"),
+                "URL is not as expected after navigating to About page");
     }
 }

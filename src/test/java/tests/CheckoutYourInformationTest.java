@@ -3,6 +3,7 @@ package tests;
 import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import pages.CheckoutYourInformationPage;
 
 import static org.testng.Assert.assertEquals;
 
@@ -15,25 +16,16 @@ public class CheckoutYourInformationTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Checkout Information")
-    @Description("Scenario: Check checkout information form with positive credentials" +
-            "Given: User is logged in" +
-            "AND Product was added to the cart" +
-            "AND Checkout button was tapped" +
-            "AND Checkout information page is displayed" +
-            "WHEN: Valid firstname is inputted" +
-            "AND Valid lastname is inputted" +
-            "AND Valid zipcode is inputted" +
-            "AND Continue Order button was tapped" +
-            "THEN: Checkout Overview page is displayed")
     @Severity(SeverityLevel.CRITICAL)
     public void checkCheckoutYourInformationWithPositiveCred() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        yourCartPage.clickToCheckoutButton();
-        checkoutYourInformationPage.continueOrder("veronika", "akulovich", "123456");
-        assertEquals(checkoutOverviewPage.getTitle(), "Checkout: Overview", "Title wasn't found");
+        loginStep.auth("standard_user", "secret_sauce");
+        String title = productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .openCart()
+                .checkout()
+                .continueOrder()
+                .getTitle();
+        assertEquals(title, "Checkout: Overview", "Title wasn't found");
     }
 
     @DataProvider(name = "Параметризированный тест для негативных сценариев на странице Checkout Your Information")
@@ -53,25 +45,17 @@ public class CheckoutYourInformationTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Checkout Information")
-    @Description("Scenario Outline: Check checkout information form with positive credentials" +
-            "Given: User is logged in" +
-            "AND Product was added to the cart" +
-            "AND Checkout button was tapped" +
-            "AND Checkout information page is displayed" +
-            "WHEN:  <firstname> is inputted" +
-            "AND <lastname> is inputted" +
-            "AND  <zipcode> is inputted" +
-            "AND Continue Order button was tapped" +
-            "THEN: <ErrorMessage> is displayed")
     @Severity(SeverityLevel.NORMAL)
     public void checkCheckoutYourInformationWithEmptyZipCode1(String firstName, String lastName, String zipCode, String errorMessage) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        yourCartPage.clickToCheckoutButton();
-        checkoutYourInformationPage.continueOrder(firstName, lastName, zipCode);
-        assertEquals(checkoutYourInformationPage.getErrorMessageForCheckoutInformationPage(), errorMessage, "Something went wrong. Error wasn't found");
+        loginStep.auth("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .openCart()
+                .checkout();
+        String actualError = new CheckoutYourInformationPage(driver)
+                .continueOrderExpectingError(firstName, lastName, zipCode)
+                .getErrorMessageForCheckoutInformationPage();
+        assertEquals(actualError, errorMessage, "Something went wrong. Error wasn't found");
     }
 
     @Test(
@@ -81,19 +65,15 @@ public class CheckoutYourInformationTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Checkout Information")
-    @Description("Scenario: Check transition upon Cancel Button" +
-            "Given: Checkout Your information page is displayed" +
-            "AND Cancel button is displayed" +
-            "WHEN:  Cancel button was tapped" +
-            "THEN: Your Cart page is displayed")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionFromCancelButton() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        yourCartPage.clickToCheckoutButton();
-        checkoutYourInformationPage.clickCancelButton();
-        assertEquals(yourCartPage.getTitle(), "Your Cart", "Something went wrong. Your Cart wasn't found");
+        loginStep.auth("standard_user", "secret_sauce");
+        String title = productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .openCart()
+                .checkout()
+                .cancel()
+                .getTitle();
+        assertEquals(title, "Your Cart", "Something went wrong. Your Cart wasn't found");
     }
 }

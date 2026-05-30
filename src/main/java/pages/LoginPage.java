@@ -18,15 +18,32 @@ public class LoginPage extends BasePage {
     }
 
     @Step("Открытие страницы Login")
-    public void open() {
+    public LoginPage open() {
         driver.get(BASE_URL);
+        return this;
     }
 
-    @Step("Вход в систему с именем пользователя: '{user}' и паролем '{password}' ")
-    public void login(String user, String password) {
+    @Override
+    public LoginPage isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
+        return this;
+    }
+
+    @Step("Вход в систему с именем пользователя: '{user}' и паролем '{password}'")
+    public ProductsPage login(String user, String password) {
         driver.findElement(USERNAME_FIELD).sendKeys(user);
         driver.findElement(PASSWORD_FIELD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON).click();
+        return new ProductsPage(driver).isPageOpened();
+    }
+
+    @Step("Попытка входа с ошибкой: '{user}' и паролем '{password}'")
+    public LoginPage loginWithInvalidCred(String user, String password) {
+        driver.findElement(USERNAME_FIELD).sendKeys(user);
+        driver.findElement(PASSWORD_FIELD).sendKeys(password);
+        driver.findElement(LOGIN_BUTTON).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ERROR_MESSAGE));
+        return this;
     }
 
     @Step("Получение ошибки на странице Login")
@@ -37,10 +54,5 @@ public class LoginPage extends BasePage {
     @Step("Отображение кнопки Login на странице Login")
     public WebElement getLoginButton() {
         return driver.findElement(LOGIN_BUTTON);
-    }
-
-    @Step("Страница Login открыта")
-    public void isPageOpened() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGIN_BUTTON));
     }
 }

@@ -1,8 +1,6 @@
 package tests;
 
 import io.qameta.allure.*;
-import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -17,18 +15,10 @@ public class LoginTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Login")
-    @Description("Scenario: Check Login with valid credentials" +
-            "Given: Login page is opened" +
-            "WHEN: Valid user name is inputted" +
-            "AND Valid Password is inputted" +
-            "AND Login button is tapped" +
-            "THEN: Product page is displayed")
     @Severity(SeverityLevel.CRITICAL)
-
     public void checkLoginWithPositiveCred() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        assertEquals(productsPage.getTitle(), "Products", "Title wasn't found");
+        loginStep.auth("standard_user", "secret_sauce");
+        assertEquals(productsPage.isPageOpened().getTitle(), "Products", "Title wasn't found");
     }
 
     @DataProvider(name = "Параметризированный тест для негативного логина")
@@ -47,16 +37,9 @@ public class LoginTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Login")
-    @Description("Scenario Outline: Check Login with negative scenarios" +
-            "Given: Login page is opened" +
-            "WHEN: <username> is inputted" +
-            "AND <password> is inputted" +
-            "AND Login button is tapped" +
-            "THEN: <ErrorMessage> is displayed")
     @Severity(SeverityLevel.NORMAL)
     public void chekLoginWithNegativeCred(String user, String password, String errorMessage) {
-        loginPage.open();
-        loginPage.login(user, password);
-        assertEquals(loginPage.getErrorMessage(), errorMessage, "Error message isn't displayed");
+        String actualError = loginStep.loginWithError(user, password);
+        assertEquals(actualError, errorMessage, "Error message isn't displayed");
     }
 }
