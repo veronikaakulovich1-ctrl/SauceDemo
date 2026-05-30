@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -16,6 +17,7 @@ public class CheckoutYourInformationPage extends BasePage {
     private final By CANCEL_BUTTON = By.xpath("//button[@name='cancel']");
     private final By ERROR_MESSAGE_FOR_CHECKOUT = By.cssSelector("[data-test=error]");
 
+    @Step("Ввод пользовательских данных для оформления заказа: '{firstname}', '{lastname}', '{zipcode}' ")
     public void continueOrder(String firstname, String lastname, String zipcode) {
         driver.findElement(FIRSTNAME_FIELD).sendKeys(firstname);
         driver.findElement(LASTNAME_FIELD).sendKeys(lastname);
@@ -23,10 +25,12 @@ public class CheckoutYourInformationPage extends BasePage {
         driver.findElement(CONTINUE_BUTTON).click();
     }
 
+    @Step("Получение ошибки на странице Checkout Information")
     public String getErrorMessageForCheckoutInformationPage() {
         return driver.findElement(ERROR_MESSAGE_FOR_CHECKOUT).getText();
     }
 
+    @Step("Клик по кнопке Cancel на странице Checkout Infirmation")
     public void clickCancelButton() {
         driver.findElement(CANCEL_BUTTON).click();
     }

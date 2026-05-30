@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,10 +20,12 @@ public class CheckoutOverviewPage extends BasePage {
         super(driver);
     }
 
+    @Step("Получение заголовка на странице Checkout Overview")
     public String getTitle() {
         return driver.findElement(TITLE_CHECKOUT_OVERVIEW).getText();
     }
 
+    @Step("Расчет Total Price всех товаров")
     public String calculateTotalPriceOnCheckout() {
         List<WebElement> cartItems = driver.findElements(CART_ITEMS);
         if (cartItems.isEmpty()) {
@@ -37,11 +40,13 @@ public class CheckoutOverviewPage extends BasePage {
         return totalPrice.toString();
     }
 
+    @Step("Получение Subtotal Price на странице checkout Overview")
     public String getSummarySubtotalPrice() {
         String fullText = driver.findElement(SUMMARY_SUBTOTAL_PRICE).getText();
         return fullText.replaceAll("[^\\d.]", "").trim();
     }
 
+    @Step("Клик на кнопку Finish Button на странице checkout Overview")
     public void clickFinishButton() {
         driver.findElement(FINISH_BUTTON).click();
     }

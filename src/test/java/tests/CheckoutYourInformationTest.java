@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -12,6 +13,19 @@ public class CheckoutYourInformationTest extends BaseTest {
             testName = "Проверка ввода валидных данных на странице Checkout Your Information странице",
             groups = "smoke"
     )
+    @Owner("Akulovich")
+    @Feature("Checkout Information")
+    @Description("Scenario: Check checkout information form with positive credentials" +
+            "Given: User is logged in" +
+            "AND Product was added to the cart" +
+            "AND Checkout button was tapped" +
+            "AND Checkout information page is displayed" +
+            "WHEN: Valid firstname is inputted" +
+            "AND Valid lastname is inputted" +
+            "AND Valid zipcode is inputted" +
+            "AND Continue Order button was tapped" +
+            "THEN: Checkout Overview page is displayed")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkCheckoutYourInformationWithPositiveCred() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -37,6 +51,19 @@ public class CheckoutYourInformationTest extends BaseTest {
             testName = "Негативные сценарии для страницу Checkout Your Information",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Checkout Information")
+    @Description("Scenario Outline: Check checkout information form with positive credentials" +
+            "Given: User is logged in" +
+            "AND Product was added to the cart" +
+            "AND Checkout button was tapped" +
+            "AND Checkout information page is displayed" +
+            "WHEN:  <firstname> is inputted" +
+            "AND <lastname> is inputted" +
+            "AND  <zipcode> is inputted" +
+            "AND Continue Order button was tapped" +
+            "THEN: <ErrorMessage> is displayed")
+    @Severity(SeverityLevel.NORMAL)
     public void checkCheckoutYourInformationWithEmptyZipCode1(String firstName, String lastName, String zipCode, String errorMessage) {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -52,6 +79,14 @@ public class CheckoutYourInformationTest extends BaseTest {
             testName = "Проверка перехода на странице Your Cart при клике на кнопку Cancel",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Checkout Information")
+    @Description("Scenario: Check transition upon Cancel Button" +
+            "Given: Checkout Your information page is displayed" +
+            "AND Cancel button is displayed" +
+            "WHEN:  Cancel button was tapped" +
+            "THEN: Your Cart page is displayed")
+    @Severity(SeverityLevel.NORMAL)
     public void checkTransitionFromCancelButton() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");

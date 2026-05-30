@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -13,6 +14,9 @@ public class BurgerMenuTest extends BaseTest {
             testName = "Проверка logout",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Burger Menu")
+    @Severity(SeverityLevel.NORMAL)
     public void checkLogout() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -27,6 +31,9 @@ public class BurgerMenuTest extends BaseTest {
             testName = "Проверка перехода на страницу Product через clickAllItems",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Burger Menu")
+    @Severity(SeverityLevel.NORMAL)
     public void checkTransitionToAllItemsMenu() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
@@ -41,6 +48,9 @@ public class BurgerMenuTest extends BaseTest {
             testName = "Проверка перехода на About Page",
             groups = "regression"
     )
+    @Owner("Akulovich")
+    @Feature("Burger Menu")
+    @Severity(SeverityLevel.NORMAL)
     public void checkTransitionToAboutPage() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
