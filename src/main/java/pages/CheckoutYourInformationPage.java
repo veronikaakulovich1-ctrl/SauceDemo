@@ -38,15 +38,20 @@ public class CheckoutYourInformationPage extends BasePage {
 
     @Step("Ввод валидных данных для оформления заказа")
     public CheckoutOverviewPage continueOrder() {
-        fillCheckoutForm(CustomerInfoFactory.defaultCustomer());
+        return continueOrder(CustomerInfoFactory.getCustomer());
+    }
+
+    @Step("Ввод данных для оформления заказа: '{customer.firstName}', '{customer.lastName}', '{customer.zipCode}'")
+    public CheckoutOverviewPage continueOrder(CustomerInfo customer) {
+        fillCheckoutForm(customer);
         driver.findElement(CONTINUE_BUTTON).click();
         return new CheckoutOverviewPage(driver).isPageOpened();
     }
 
     private void fillCheckoutForm(CustomerInfo customer) {
-        driver.findElement(FIRSTNAME_FIELD).sendKeys(customer.firstName());
-        driver.findElement(LASTNAME_FIELD).sendKeys(customer.lastName());
-        driver.findElement(ZIP_CODE_FIELD).sendKeys(customer.zipCode());
+        driver.findElement(FIRSTNAME_FIELD).sendKeys(customer.getFirstName());
+        driver.findElement(LASTNAME_FIELD).sendKeys(customer.getLastName());
+        driver.findElement(ZIP_CODE_FIELD).sendKeys(customer.getZipCode());
     }
 
     @Step("Получение ошибки на странице Checkout Information")

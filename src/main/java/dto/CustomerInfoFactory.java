@@ -2,12 +2,9 @@ package dto;
 
 import com.github.javafaker.Faker;
 
-public final class CustomerInfoFactory {
+public class CustomerInfoFactory {
 
-    private CustomerInfoFactory() {
-    }
-
-    public static CustomerInfo defaultCustomer() {
+    public static CustomerInfo getCustomer() {
         Faker faker = new Faker();
         return new CustomerInfo(
                 faker.name().firstName(),
