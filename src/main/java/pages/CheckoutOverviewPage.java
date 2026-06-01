@@ -4,12 +4,13 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
 public class CheckoutOverviewPage extends BasePage {
 
-    private final By TITLE_CHECKOUT_OVERVIEW = By.cssSelector("[data-test = title]");
+    private final By TITLE_CHECKOUT_OVERVIEW = By.cssSelector("[data-test=title]");
     private final By CART_ITEMS = By.cssSelector(".cart_item");
     private final By CART_ITEMS_PRICE = By.cssSelector(".inventory_item_price");
     private final By SUMMARY_SUBTOTAL_PRICE = By.xpath("//div[@class='summary_subtotal_label']");
@@ -18,6 +19,12 @@ public class CheckoutOverviewPage extends BasePage {
 
     public CheckoutOverviewPage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public CheckoutOverviewPage isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE_CHECKOUT_OVERVIEW));
+        return this;
     }
 
     @Step("Получение заголовка на странице Checkout Overview")
@@ -31,13 +38,13 @@ public class CheckoutOverviewPage extends BasePage {
         if (cartItems.isEmpty()) {
             return "0.00";
         }
-        Double totalPrice = 0.00;
+        double totalPrice = 0.00;
         for (WebElement item : cartItems) {
             String priceText = item.findElement(CART_ITEMS_PRICE).getText();
             double price = Double.parseDouble(priceText.replace("$", ""));
             totalPrice += price;
         }
-        return totalPrice.toString();
+        return String.valueOf(totalPrice);
     }
 
     @Step("Получение Subtotal Price на странице checkout Overview")
@@ -46,8 +53,9 @@ public class CheckoutOverviewPage extends BasePage {
         return fullText.replaceAll("[^\\d.]", "").trim();
     }
 
-    @Step("Клик на кнопку Finish Button на странице checkout Overview")
-    public void clickFinishButton() {
+    @Step("Клик на кнопку Finish на странице checkout Overview")
+    public CheckoutCompletePage finishOrder() {
         driver.findElement(FINISH_BUTTON).click();
+        return new CheckoutCompletePage(driver).isPageOpened();
     }
 }

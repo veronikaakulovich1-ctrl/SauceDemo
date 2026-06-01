@@ -1,9 +1,9 @@
 package tests;
 
 import io.qameta.allure.*;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pages.YourCartPage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -17,22 +17,17 @@ public class YourCartTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Your Cart")
-    @Description("Scenario: Check product addition to the cart" +
-            "Given: User is logged in" +
-            "WHEN: Product was added" +
-            "AND Your cart page is displayed" +
-            "THEN: Added product is displayed on the cart")
     @Severity(SeverityLevel.CRITICAL)
     public void checkAddToCart() {
         SoftAssert softAssert = new SoftAssert();
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        softAssert.assertEquals(yourCartPage.getTitle(), "Your Cart", "Something went wrong. Your Cart wasn't found");
-        String expectedProductName = "Sauce Labs Backpack";
-        String actualProductName = yourCartPage.getAddedProductName();
-        softAssert.assertEquals(actualProductName, expectedProductName, "The expected product was not found in the cart.");
+        loginStep.auth("standard_user", "secret_sauce");
+        YourCartPage cart = productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .openCart();
+        softAssert.assertEquals(cart.getTitle(), "Your Cart",
+                "Something went wrong. Your Cart wasn't found");
+        softAssert.assertEquals(cart.getAddedProductName(), "Sauce Labs Backpack",
+                "The expected product was not found in the cart.");
         softAssert.assertAll();
     }
 
@@ -43,23 +38,15 @@ public class YourCartTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Your Cart")
-    @Description("Scenario: Check removing product from the cart" +
-            "Given: User is logged in" +
-            "AND Product was added to the cart" +
-            "WHEN: Your cart page is displayed" +
-            "AND Remove button next to product was tapped" +
-            "THEN: Product was removed from the cart")
     @Severity(SeverityLevel.NORMAL)
     public void checkRemoveFromCart() {
-        SoftAssert softAssert = new SoftAssert();
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        yourCartPage.clickToRemoveButton("Sauce Labs Backpack");
-        WebElement removedItem = yourCartPage.findRemovedCartItemElement();
-        softAssert.assertFalse(removedItem.isDisplayed(), "Product wasn't removed from the cart");
-        softAssert.assertAll();
+        loginStep.auth("standard_user", "secret_sauce");
+        productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .openCart()
+                .removeProduct("Sauce Labs Backpack");
+        assertFalse(yourCartPage.findRemovedCartItemElement().isDisplayed(),
+                "Product wasn't removed from the cart");
     }
 
     @Test(
@@ -69,19 +56,14 @@ public class YourCartTest extends BaseTest {
     )
     @Owner("Akulovich")
     @Feature("Your Cart")
-    @Description("Scenario: Check transition upon Continue Shopping Button" +
-            "Given: User is logged in" +
-            "AND Product was added to the cart" +
-            "WHEN: Your cart page is displayed" +
-            "AND Continue Shopping button was tapped" +
-            "THEN: Products page is displayed")
     @Severity(SeverityLevel.NORMAL)
     public void continueShoppingButtonClick() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.addToCart("Sauce Labs Backpack");
-        productsPage.clickCart();
-        yourCartPage.clickToContinueShoppingButton();
-        assertEquals(productsPage.getTitle(), "Products", "Title wasn't found");
+        loginStep.auth("standard_user", "secret_sauce");
+        String title = productsPage.isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .openCart()
+                .continueShopping()
+                .getTitle();
+        assertEquals(title, "Products", "Title wasn't found");
     }
 }

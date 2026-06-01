@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.*;
+import steps.LoginStep;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 public class BaseTest {
 
     WebDriver driver;
-    LoginPage loginPage;
+    LoginStep loginStep;
     ProductsPage productsPage;
     YourCartPage yourCartPage;
     CheckoutYourInformationPage checkoutYourInformationPage;
@@ -54,7 +55,7 @@ public class BaseTest {
 
         iTestContext.setAttribute("driver", driver);
 
-        loginPage = new LoginPage(driver);
+        loginStep = new LoginStep(driver);
         productsPage = new ProductsPage(driver);
         yourCartPage = new YourCartPage(driver);
         checkoutYourInformationPage = new CheckoutYourInformationPage(driver);
