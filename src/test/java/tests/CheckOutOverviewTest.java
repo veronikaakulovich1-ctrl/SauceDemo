@@ -17,7 +17,7 @@ public class CheckOutOverviewTest extends BaseTest {
     @Feature("Checkout Overview")
     @Severity(SeverityLevel.CRITICAL)
     public void checkGetProductPriceSumWithTotalPrice() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         CheckoutOverviewPage overview = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .addToCart("Sauce Labs Bolt T-Shirt")

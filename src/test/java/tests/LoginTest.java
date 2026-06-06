@@ -17,15 +17,15 @@ public class LoginTest extends BaseTest {
     @Feature("Login")
     @Severity(SeverityLevel.CRITICAL)
     public void checkLoginWithPositiveCred() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         assertEquals(productsPage.isPageOpened().getTitle(), "Products", "Title wasn't found");
     }
 
     @DataProvider(name = "Параметризированный тест для негативного логина")
     public Object[][] loginData() {
         return new Object[][]{
-                {"", "secret_sauce", "Epic sadface: Username is required"},
-                {"standard_user", "", "Epic sadface: Password is required"},
+                {"", password, "Epic sadface: Username is required"},
+                {user, "", "Epic sadface: Password is required"},
                 {"test", "test", "Epic sadface: Username and password do not match any user in this service"}
         };
     }

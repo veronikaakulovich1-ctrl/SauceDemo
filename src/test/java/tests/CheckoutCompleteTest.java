@@ -16,7 +16,7 @@ public class CheckoutCompleteTest extends BaseTest {
     @Feature("Checkout Complete")
     @Severity(SeverityLevel.CRITICAL)
     public void andToEndTestForCompleteOrder() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         String title = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .addToCart("Sauce Labs Bolt T-Shirt")
@@ -37,7 +37,7 @@ public class CheckoutCompleteTest extends BaseTest {
     @Feature("Checkout Complete")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionByBackHomeButton() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         String title = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .addToCart("Sauce Labs Bolt T-Shirt")

@@ -20,7 +20,7 @@ public class YourCartTest extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void checkAddToCart() {
         SoftAssert softAssert = new SoftAssert();
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         YourCartPage cart = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .openCart();
@@ -40,7 +40,7 @@ public class YourCartTest extends BaseTest {
     @Feature("Your Cart")
     @Severity(SeverityLevel.NORMAL)
     public void checkRemoveFromCart() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .openCart()
@@ -58,7 +58,7 @@ public class YourCartTest extends BaseTest {
     @Feature("Your Cart")
     @Severity(SeverityLevel.NORMAL)
     public void continueShoppingButtonClick() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         String title = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .openCart()

@@ -13,6 +13,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.*;
 import steps.LoginStep;
+import utils.PropertyReader;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -28,6 +29,9 @@ public class BaseTest {
     CheckoutOverviewPage checkoutOverviewPage;
     CheckoutCompletePage checkoutCompletePage;
     BurgerMenuPage burgerMenuPage;
+
+    String user = System.getProperty("user", PropertyReader.getProperty("user"));
+    String password = System.getProperty("password", PropertyReader.getProperty("password"));
 
     @Parameters({"browser"})
     @BeforeMethod(

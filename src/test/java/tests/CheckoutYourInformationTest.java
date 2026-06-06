@@ -18,7 +18,7 @@ public class CheckoutYourInformationTest extends BaseTest {
     @Feature("Checkout Information")
     @Severity(SeverityLevel.CRITICAL)
     public void checkCheckoutYourInformationWithPositiveCred() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         String title = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .openCart()
@@ -47,7 +47,7 @@ public class CheckoutYourInformationTest extends BaseTest {
     @Feature("Checkout Information")
     @Severity(SeverityLevel.NORMAL)
     public void checkCheckoutYourInformationWithEmptyZipCode1(String firstName, String lastName, String zipCode, String errorMessage) {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .openCart()
@@ -67,7 +67,7 @@ public class CheckoutYourInformationTest extends BaseTest {
     @Feature("Checkout Information")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionFromCancelButton() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         String title = productsPage.isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .openCart()

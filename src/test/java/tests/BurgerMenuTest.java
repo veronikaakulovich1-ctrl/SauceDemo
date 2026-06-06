@@ -18,7 +18,7 @@ public class BurgerMenuTest extends BaseTest {
     @Feature("Burger Menu")
     @Severity(SeverityLevel.NORMAL)
     public void checkLogout() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         burgerMenuPage.isPageOpened().openMenu().logout();
         assertTrue(new LoginPage(driver).isPageOpened().getLoginButton().isDisplayed(),
                 "Login button is not displayed after logout");
@@ -33,7 +33,7 @@ public class BurgerMenuTest extends BaseTest {
     @Feature("Burger Menu")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionToAllItemsMenu() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productsPage.isPageOpened().openCart();
         String title = burgerMenuPage.isPageOpened()
                 .openMenu()
@@ -51,7 +51,7 @@ public class BurgerMenuTest extends BaseTest {
     @Feature("Burger Menu")
     @Severity(SeverityLevel.NORMAL)
     public void checkTransitionToAboutPage() {
-        loginStep.auth("standard_user", "secret_sauce");
+        loginStep.auth(user, password);
         productsPage.isPageOpened().openCart();
         burgerMenuPage.isPageOpened().openMenu().openAbout();
         assertTrue(driver.getCurrentUrl().contains("saucelabs.com"),

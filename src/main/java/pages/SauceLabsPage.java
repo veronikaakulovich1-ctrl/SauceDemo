@@ -1,10 +1,14 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.Assert;
 
+@Log4j2
 public class SauceLabsPage extends BasePage {
 
     private static final By SIGN_UP_FOR_FREE_BUTTON = By.xpath(
@@ -16,7 +20,12 @@ public class SauceLabsPage extends BasePage {
 
     @Override
     public SauceLabsPage isPageOpened() {
-        wait.until(ExpectedConditions.urlContains("saucelabs.com"));
+      try {
+          wait.until(ExpectedConditions.urlContains("saucelabs.com"));
+      }catch (TimeoutException e) {
+          log.error(e.getMessage());
+          Assert.fail("Page isn't opened");
+      }
         return this;
     }
 
