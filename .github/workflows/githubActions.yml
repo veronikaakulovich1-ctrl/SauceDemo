@@ -22,7 +22,7 @@ jobs:
 
     env:
       USER: ${{secrets.SD_USER}}
-      PASSWORD: ${{secrets.CD_PASSWORD}}
+      PASSWORD: ${{secrets.SD_PASSWORD}}
 
     steps:
       - uses: actions/checkout@v4
